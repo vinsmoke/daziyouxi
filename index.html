@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+
+	<style>
+	*{margin:0px;padding:0px;}
+	body{
+		
+	}
+	.jiemian{
+		width:630px;
+		height:500px;
+		background-image:url(image/jiemian.png);
+		margin:auto;
+		position:absolute;
+		top:0;
+		left:0;
+		right:0;
+		bottom:0;
+		z-index:9999;
+	}
+	.kaishi{
+		width:177px;
+		height:50px;
+		position:absolute;
+		left:440px;
+		top:423px;
+	}
+	.dinone{
+		display: none;
+	}
+	
+	.box{
+		width:800px;
+		height:600px;
+		border:1px solid #666;
+		position:relative;
+		overflow:hidden;
+		margin: 0 auto;
+		background-repeat:no-repeat;
+	 	/* display:none;  */
+	 	opacity:0;
+	 	background:url(./image/rtyy.jpg);
+	}
+	.zi{
+		width:55px;
+		height:60px;
+		position: absolute;
+		color:red;
+		font-weight:700;
+		/* font-family:'myriad-set-pro_semibold.woff'; */
+		 border-radius:50%;
+		text-align:center;
+		line-height:30px;
+		opacity:1;
+		font-size:40px;
+		background-position:cover;
+	}
+	.dipb{
+		display:block;
+	}
+</style>
+</head>
+<body>
+<div class="jiemian">
+	<div class="kaishi"></div>
+</div>
+<div class="box">
+</div>
+</body>
+<script>
+/*var box=document.querySelector('.box');//CSS选择器
+document.onkeyup=function(e){
+	console.log(e.keyCode)
+ var key=String.fromCharCode(e.keyCode).toLowerCase();//转成字母然后转成小写
+ if(key==='a'){
+	box.removeChid(box.firstElementChild)
+	var el=document.createElement('div');
+	el.className="zi"
+	el.innerHTML=String.fromCharCode(Math.floor(Math.random()*26+97))//随机添加一个字母
+	box.appendChild(el);
+
+}
+}*/
+
+/*document.onkeydown=function(e){
+  console.log('down',e)
+}
+document.onkeyup=function(e){
+	console.log('up',e)
+}
+document.onkeypress=function (e) {
+	console.log('press',e)
+}*/
+/*var obj={}
+for(var i=10000;i<100100;i++){
+	obj[i]=String.fromCharCode(i)
+}
+console.log(JSON.stringify(obj));*/
+/*点击开始*/
+var kaishi=document.querySelector('.kaishi');
+var jiemian=document.querySelector('.jiemian');
+var shujiku=['o','q','t','w','x'];
+
+	kaishi.onclick=function(){
+		jiemian.classList.add('dinone');
+		/*box.classList.add('dipb');*/
+		box.style.opacity=1;
+	}
+	var box=document.querySelector('.box')
+/*	box.classList.add('dinone');*/
+	/*box.classList.add('dinone');
+	kaishi.onclick=function(){
+		console.log(9)
+		box.classList.remove('dinone');
+		jiemian.classList.add('dinone');
+		box.classList.add('dipb');
+	}
+var box=document.querySelector('.box')*/
+var zimijihe={} //k div 
+ var shuzu=5;//一开始出几个
+ createzimu=function(){
+ 	do{
+ 	var zimu=String.fromCharCode(Math.floor(Math.random()*26+97))
+ 	}while(zimijihe[zimu])//去重
+ 		var el=document.createElement('div');
+ 		//console.dir(el)
+ 		/*var b=Math.floor(Math.random()*255);
+ 		var g=Math.floor(Math.random()*255);
+ 		var r=Math.floor(Math.random()*255);*/
+ 		var r=Math.floor(Math.random()*shujiku.length);
+ 		el.classList.add('zi');
+
+ 		//console.log(el.classList.add)
+		/*el.style.backgroundColor="rgb("+r+","+g+","+b+")"*/
+		el.style.background="url(./image/"+shujiku[r]+".png)";
+		 	//console.log(box.offsetWidth)
+		 	 	 //console.log(el.offsetWidth)
+ 	el.style.left=Math.ceil(Math.random()*(box.offsetWidth-30))+"px"
+ 	el.innerHTML=zimu;
+ 	 	box.appendChild(el);	
+ var ran=Math.ceil(Math.random()*5)//获取向下移动的值
+ 	zimijihe[zimu]={top:0,yuansu:el,off:ran}
+ 	//alert(zimijihe[zimu]);
+ 	//字母是变量所以用的是[]
+ 	//console.log(zimijihe)
+ 	//console.log(zimijihe[zimu]);
+
+ 	}
+ 	for(var i=0;i<shuzu;i++){
+ 		createzimu();
+ 	}
+ 	
+ 	
+ //移除的函数
+  removezimu=function(zimu){
+  	var el=zimijihe[zimu].yuansu;//在字集合里把字取出来
+  	el.parentElement.removeChild(el);
+
+  	delete zimijihe[zimu]//在字集合里删除它
+  	//console.log(zimijihe);
+  	//console.log(zimijihe[zimu])
+ }
+
+ document.onkeyup=function(e){
+ 	if(e.keyCode==32){
+ 		game();
+ 		return;
+ 	}
+ 	var key=String.fromCharCode(e.keyCode).toLowerCase();
+ 	if(zimijihe[key]){
+ 		removezimu(key);
+ 		createzimu();
+ 	}
+ }
+ //掉的函数
+	var xx=box.offsetHeight;
+ var diao=function(){
+ 	var arr=[];
+	for(var i in zimijihe){//防止有好多个
+		var data =zimijihe[i]
+		var el =data.yuansu;
+		data.top+=data.off;
+	el.style.top=data.top+"px";
+	if(data.top>xx){
+		arr.push(i);
+	}
+	}
+	if(arr.length!==0){
+		for(var i=0;i<arr.length;i++){
+			removezimu(arr[i]);
+		createzimu();
+		}
+}
+}
+	setInterval(diao,50);
+//开关
+var game=function(){
+ var timerId=setInterval(diao,50);//事件编号
+alert(1)
+ 	if(timerId){
+ 		clearInterval(timerId);
+ 		//alert(timerId)
+ 		timerId=null;
+ 	}else{
+ 		timerId=setInterval(diao,50)//如果不把值给了timerId
+ 	}
+
+ }
+</script>
+</html>
